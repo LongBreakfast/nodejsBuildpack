@@ -16,32 +16,32 @@ source "$BUILDPACK_DIR/scripts/install_go.sh"
 # Create a temporary directory for output
 output_dir=$(mktemp -d -t supplyXXX)
 
-# Debug: Print out build variables
-echo "BUILD_DIR: $BUILD_DIR"
-echo "CACHE_DIR: $CACHE_DIR"
-echo "DEPS_DIR: $DEPS_DIR"
-echo "DEPS_IDX: $DEPS_IDX"
-echo "BUILDPACK_DIR: $BUILDPACK_DIR"
+# # Debug: Print out build variables
+# echo "BUILD_DIR: $BUILD_DIR"
+# echo "CACHE_DIR: $CACHE_DIR"
+# echo "DEPS_DIR: $DEPS_DIR"
+# echo "DEPS_IDX: $DEPS_IDX"
+# echo "BUILDPACK_DIR: $BUILDPACK_DIR"
 
-# Ensure the installation directory for BTP CLI exists
-BTP_CLI_INSTALL_DIR="$BUILD_DIR/btp-cli"
-mkdir -p "$BTP_CLI_INSTALL_DIR" || { echo "Failed to create directory $BTP_CLI_INSTALL_DIR"; exit 1; }
+# # Ensure the installation directory for BTP CLI exists
+# BTP_CLI_INSTALL_DIR="$BUILD_DIR/btp-cli"
+# mkdir -p "$BTP_CLI_INSTALL_DIR" || { echo "Failed to create directory $BTP_CLI_INSTALL_DIR"; exit 1; }
 
-# Debug: Print out BTP CLI installation directory
-echo "BTP_CLI_INSTALL_DIR: $BTP_CLI_INSTALL_DIR"
+# # Debug: Print out BTP CLI installation directory
+# echo "BTP_CLI_INSTALL_DIR: $BTP_CLI_INSTALL_DIR"
 
-# Install BTP CLI
-echo "-----> Installing BTP CLI"
-curl -LJO https://tools.hana.ondemand.com/additional/btp-cli-linux-amd64-latest.tar.gz --cookie "eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt"
-tar -xzf btp-cli-linux-amd64-latest.tar.gz -C "$BTP_CLI_INSTALL_DIR" --strip-components=1
-chmod +x "$BTP_CLI_INSTALL_DIR/btp"
+# # Install BTP CLI
+# echo "-----> Installing BTP CLI"
+# curl -LJO https://tools.hana.ondemand.com/additional/btp-cli-linux-amd64-latest.tar.gz --cookie "eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt"
+# tar -xzf btp-cli-linux-amd64-latest.tar.gz -C "$BTP_CLI_INSTALL_DIR" --strip-components=1
+# chmod +x "$BTP_CLI_INSTALL_DIR/btp"
 
-# Update the PATH environment variable to include the BTP CLI installation directory
-echo 'export PATH="$BTP_CLI_INSTALL_DIR:$PATH"' > "$BUILD_DIR/.profile.d/set-path.sh"
-chmod +x "$BUILD_DIR/.profile.d/set-path.sh"
+# # Update the PATH environment variable to include the BTP CLI installation directory
+# echo 'export PATH="$BTP_CLI_INSTALL_DIR:$PATH"' > "$BUILD_DIR/.profile.d/set-path.sh"
+# chmod +x "$BUILD_DIR/.profile.d/set-path.sh"
 
-# Debug: Verify BTP CLI installation
-ls -la "$BTP_CLI_INSTALL_DIR"
+# # Debug: Verify BTP CLI installation
+# ls -la "$BTP_CLI_INSTALL_DIR"
 
 # Run the original go build supply script
 echo "-----> Running go build supply"
