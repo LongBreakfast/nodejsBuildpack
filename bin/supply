@@ -17,18 +17,18 @@ source "$BUILDPACK_DIR/scripts/install_go.sh"
 output_dir=$(mktemp -d -t supplyXXX)
 
 # # Debug: Print out build variables
-# echo "BUILD_DIR: $BUILD_DIR"
-# echo "CACHE_DIR: $CACHE_DIR"
-# echo "DEPS_DIR: $DEPS_DIR"
-# echo "DEPS_IDX: $DEPS_IDX"
-# echo "BUILDPACK_DIR: $BUILDPACK_DIR"
+echo "BUILD_DIR: $BUILD_DIR"
+echo "CACHE_DIR: $CACHE_DIR"
+echo "DEPS_DIR: $DEPS_DIR"
+echo "DEPS_IDX: $DEPS_IDX"
+echo "BUILDPACK_DIR: $BUILDPACK_DIR"
 
-# # Ensure the installation directory for BTP CLI exists
-# BTP_CLI_INSTALL_DIR="$BUILD_DIR/btp-cli"
-# mkdir -p "$BTP_CLI_INSTALL_DIR" || { echo "Failed to create directory $BTP_CLI_INSTALL_DIR"; exit 1; }
+# Ensure the installation directory for BTP CLI exists
+BTP_CLI_INSTALL_DIR="$BUILD_DIR/btp-cli"
+mkdir -p "$BTP_CLI_INSTALL_DIR" || { echo "Failed to create directory $BTP_CLI_INSTALL_DIR"; exit 1; }
 
-# # Debug: Print out BTP CLI installation directory
-# echo "BTP_CLI_INSTALL_DIR: $BTP_CLI_INSTALL_DIR"
+# Debug: Print out BTP CLI installation directory
+echo "BTP_CLI_INSTALL_DIR: $BTP_CLI_INSTALL_DIR"
 
 # # Install BTP CLI
 # echo "-----> Installing BTP CLI"
