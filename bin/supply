@@ -36,12 +36,13 @@ curl -LJO https://tools.hana.ondemand.com/additional/btp-cli-linux-amd64-latest.
 tar -xzf btp-cli-linux-amd64-latest.tar.gz -C "$BTP_CLI_INSTALL_DIR" --strip-components=1
 chmod +x "$BTP_CLI_INSTALL_DIR/btp"
 
-# Update the PATH environment variable to include the BTP CLI installation directory
-echo 'export PATH="$BTP_CLI_INSTALL_DIR:$PATH"' > "$BUILD_DIR/.profile.d/set-path.sh"
-chmod +x "$BUILD_DIR/.profile.d/set-path.sh"
+# Debug: Verify BTP CLI installation
+echo "Contents of BTP_CLI_INSTALL_DIR!!!!!!"
+ls -la "$BTP_CLI_INSTALL_DIR"
 
-# # Debug: Verify BTP CLI installation
-# ls -la "$BTP_CLI_INSTALL_DIR"
+# Update the PATH environment variable to include the BTP CLI installation directory
+export PATH="$BTP_CLI_INSTALL_DIR:$PATH"
+echo "Updated PATH: $PATH"
 
 # Run the original go build supply script
 echo "-----> Running go build supply"
