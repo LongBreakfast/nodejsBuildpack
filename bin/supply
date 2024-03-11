@@ -15,4 +15,25 @@ pushd $BUILDPACK_DIR
 GOROOT=$GoInstallDir $GoInstallDir/bin/go build -mod=vendor -o $output_dir/supply ./src/nodejs/supply/cli
 popd
 
+
+export DEPS_DIR="$BUILD_DIR/.cloudfoundry"
+export BTP_CLI_INSTALL_DIR="$BUILD_DIR/btp-cli"
+
+# Create necessary directories
+mkdir -p "$DEPS_DIR/0"
+mkdir -p "$BUILD_DIR/.profile.d"
+
+# Install BTP CLI
+echo "Installing BTP CLI..."
+mkdir -p "$BTP_CLI_INSTALL_DIR"
+curl -LJO https://tools.hana.ondemand.com/additional/btp-cli-linux-amd64-latest.tar.gz --cookie "eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt"
+tar -xzf btp-cli-linux-amd64-latest.tar.gz -C "$BTP_CLI_INSTALL_DIR" --strip-components=1
+chmod +x "$BTP_CLI_INSTALL_DIR/btp"
+
+# Update the PATH environment variable to include the BTP CLI installation directory
+echo 'export PATH="$BTP_CLI_INSTALL_DIR:$PATH"' > "$BUILD_DIR/.profile.d/set-path.sh"
+chmod +x "$BUILD_DIR/.profile.d/set-path.sh"
+# Source the set-path.sh script to update the PATH variable
+source "$BUILD_DIR/.profile.d/set-path.sh" || . "$BUILD_DIR/.profile.d/set-path.sh"
+
 $output_dir/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" "$DEPS_IDX"
